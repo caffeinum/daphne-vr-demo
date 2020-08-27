@@ -6,6 +6,23 @@
     <meta name="description" content="Vaporwave aesthetic text By Ada Rose Edwards (@lady_ada_king).">
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-text-geometry-component@0.5.1/dist/aframe-text-geometry-component.min.js"></script>
+    
+    <script>
+      function faceCameraToCoords (camera, coords) {
+          camera.setAttribute("look-controls",{enabled:false})
+          camera.setAttribute("rotation", coords);
+          var newX = camera.object3D.rotation.x
+          var newY = camera.object3D.rotation.y
+          camera.components['look-controls'].pitchObject.rotation.x = newX
+          camera.components['look-controls'].yawObject.rotation.y = newY
+          camera.setAttribute("look-controls",{enabled:true})
+      }
+      
+      AFRAME.registerComponent('float-forward', {
+        // ...
+      });
+      
+    </script>
   </head>
   <body>
     <a-scene>
@@ -47,6 +64,11 @@
       <a-entity light="color: white; type: ambient;"></a-entity>
 
       <a-sky src="#sky" rotation="0 -90 0"></a-sky>
+      
+      <a-entity id="rig" position="0 1.6 0" rotation="10 0 0" float-forward>
+        <a-entity id="camera" camera look-controls wasd-controls></a-entity>
+      </a-entity>
+
     </a-scene>
   </body>
 </html>
