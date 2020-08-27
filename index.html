@@ -27,9 +27,33 @@
           let speed = new THREE.Vector3();
           
           return function() {
-            speed.z -= 0.01 * coeff; // (m/s2) / (sec/tick) = m/s per tick
+            speed.z += 0.01 * coeff; // (m/s2) / (sec/tick) = m/s per tick
 
             this.el.object3D.position.add(speed);
+          };
+        })()
+      });
+      
+      AFRAME.registerComponent("sync-acceleration", {
+        tick: (function() {
+          let coeff = 1 / 90; // second per tick
+          
+          window.speed = new THREE.Vector3();
+          window.acceleration = new THREE.Vector3();
+          window.alpha = 0;
+          window.beta = 0;
+          
+          let acc = new THREE.Vector3();
+          
+          return function() {
+            
+            acc.copy(acceleration).multiplyScalar(coeff);
+            
+            window.speed.add(acc);
+
+            this.el.object3D.position.add(window.speed);
+            this.el.object3D.rotation.set(alpha, beta, 0);
+            
           };
         })()
       });
@@ -117,7 +141,7 @@
         visible=""
       ></a-entity>
       <a-entity
-        light="color: ffaaff; intensity: 1.5"
+        light="color: #ffaaff; intensity: 1.5"
         position="5 5 5"
       ></a-entity>
       <a-entity
@@ -128,7 +152,7 @@
 
       <a-sky src="#sky" rotation="0 -90 0"></a-sky>
 
-      <a-entity id="rig" position="0 1.6 0" rotation="10 0 0" float-forward>
+      <a-entity id="rig" position="0 1.6 0" sync-acceleration>
         <a-entity id="camera" camera look-controls wasd-controls></a-entity>
       </a-entity>
     </a-scene>
