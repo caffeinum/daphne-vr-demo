@@ -11,15 +11,7 @@
     <script src="https://unpkg.com/aframe-text-geometry-component@0.5.1/dist/aframe-text-geometry-component.min.js"></script>
 
     <script>
-      // function faceCameraToCoords (camera, coords) {
-      //     camera.setAttribute("look-controls",{enabled:false})
-      //     camera.setAttribute("rotation", coords);
-      //     var newX = camera.object3D.rotation.x
-      //     var newY = camera.object3D.rotation.y
-      //     camera.components['look-controls'].pitchObject.rotation.x = newX
-      //     camera.components['look-controls'].yawObject.rotation.y = newY
-      //     camera.setAttribute("look-controls",{enabled:true})
-      // }
+      
 
       AFRAME.registerComponent("float-forward", {
         tick: (function() {
@@ -37,25 +29,52 @@
       AFRAME.registerComponent("sync-acceleration", {
         tick: (function() {
           let coeff = 1 / 90; // second per tick
+          let acc = new THREE.Vector3();
           
           window.speed = new THREE.Vector3();
           window.acceleration = new THREE.Vector3();
-          window.alpha = 0;
-          window.beta = 0;
           
-          let acc = new THREE.Vector3();
+          window.alpha = 0;
+          
+          // acceleration.z = 1;
           
           return function() {
+            
+            alpha = acceleration.z / 9.8;
             
             acc.copy(acceleration).multiplyScalar(coeff);
             
             window.speed.add(acc);
 
             this.el.object3D.position.add(window.speed);
-            this.el.object3D.rotation.set(alpha, beta, 0);
+            this.el.object3D.rotation.set(alpha, 0, 0);
             
           };
         })()
+      });
+      
+      AFRAME.registerComponent('steer', {
+        init: function () {
+          var el = this.el;
+          el.addEventListener('xbuttondown', function (evt) {
+            acceleration.z = 1;
+          });
+          el.addEventListener('xbuttonup', function (evt) {
+            acceleration.z = 0;
+          });
+          el.addEventListener('ybuttondown', function (evt) {
+            acceleration.z = -1;
+          });
+          el.addEventListener('ybuttonup', function (evt) {
+            acceleration.z = 0;
+          });
+          el.addEventListener('triggerdown', function (evt) {
+            acceleration.z = 1;
+          });
+          el.addEventListener('triggerup', function (evt) {
+            acceleration.z = 0;
+          });
+        }
       });
     </script>
   </head>
@@ -155,6 +174,9 @@
       <a-entity id="rig" position="0 1.6 0" sync-acceleration>
         <a-entity id="camera" camera look-controls wasd-controls></a-entity>
       </a-entity>
+      
+      <a-entity oculus-touch-controls steer></a-entity>
+
     </a-scene>
   </body>
 </html>
