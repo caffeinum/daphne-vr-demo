@@ -29,22 +29,27 @@
       AFRAME.registerComponent("sync-acceleration", {
         tick: (function() {
           let coeff = 1 / 90; // second per tick
-          let acc = new THREE.Vector3();
+          let damp = 0.2;
+          let temp = new THREE.Vector3();
           
           window.speed = new THREE.Vector3();
           window.acceleration = new THREE.Vector3();
+          window.target_acceleration = new THREE.Vector3();
           
           window.alpha = 0;
-          
-          // acceleration.z = 1;
-          
+
           return function() {
+            temp.copy(target_acceleration).sub(acceleration).multiplyScalar(damp);
+            
+            // acceleration += 0.2 * (target_acceleration - acceleration)
+            acceleration.add(temp);
             
             alpha = acceleration.z / 9.8;
             
-            acc.copy(acceleration).multiplyScalar(coeff);
+            temp.copy(acceleration).multiplyScalar(coeff);
             
-            window.speed.add(acc);
+            // += acc * coeff
+            window.speed.add(temp);
 
             this.el.object3D.position.add(window.speed);
             this.el.object3D.rotation.set(alpha, 0, 0);
@@ -57,22 +62,22 @@
         init: function () {
           var el = this.el;
           el.addEventListener('xbuttondown', function (evt) {
-            acceleration.z = 1;
+            target_acceleration.z = 1;
           });
           el.addEventListener('xbuttonup', function (evt) {
-            acceleration.z = 0;
+            target_acceleration.z = 0;
           });
           el.addEventListener('ybuttondown', function (evt) {
-            acceleration.z = -1;
+            target_acceleration.z = 1;
           });
           el.addEventListener('ybuttonup', function (evt) {
-            acceleration.z = 0;
+            target_acceleration.z = 0;
           });
           el.addEventListener('triggerdown', function (evt) {
-            acceleration.z = 1;
+            target_acceleration.z = -1;
           });
           el.addEventListener('triggerup', function (evt) {
-            acceleration.z = 0;
+            target_acceleration.z = 0;
           });
         }
       });
