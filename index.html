@@ -68,7 +68,7 @@
             
             // LET'S TEST WITH MINUS? IT SHOULD BE OTHER WAY REALLY
             
-            acceleration.z = - ( /* arcsin */ alpha ) * 9.8;
+            acceleration.z = ( /* arcsin */ alpha ) * 9.8;
             
             temp.copy(acceleration).multiplyScalar(coeff);
             
