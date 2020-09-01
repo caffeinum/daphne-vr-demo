@@ -104,11 +104,12 @@
       AFRAME.registerComponent('level', {
         tick: function () {
           if (window.is_level_on) {
-            window.alpha = this.el.object3D.rotation.x - window.zero_alpha;
+            window.alpha = window.zero_alpha - this.el.object3D.rotation.x;
 
             console.log('alpha', alpha);
           } else {
             window.zero_alpha = this.el.object3D.rotation.x;
+            window.alpha = 0;
           }
         }
       });
