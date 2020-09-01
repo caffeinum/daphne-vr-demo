@@ -12,6 +12,13 @@
 
     <script>
       
+      const debug = ({}) => {
+        document.querySelector('#debug-text').value = `
+          alpha: ${window.alpha}
+          rotation: ${window.speed}
+          acceleration: ${window.acceleration}
+        `
+      }
 
       AFRAME.registerComponent("float-forward", {
         tick: (function() {
@@ -54,7 +61,7 @@
             
             // alpha => acceleration
             
-            acceleration.z = alpha * 9.8;
+            acceleration.z = ( /* arcsin */ alpha ) * 9.8;
             
             temp.copy(acceleration).multiplyScalar(coeff);
             
@@ -97,6 +104,8 @@
           window.alpha = this.el.object3D.rotation.z / 180 * Math.PI;
           
           console.log('alpha', alpha);
+          
+          
         }
       });
     </script>
@@ -195,7 +204,7 @@
       <a-sky src="#sky" rotation="0 -90 0"></a-sky>
 
       <a-entity id="rig" position="0 1.6 0" sync-acceleration>
-        <a-text value="Hello World" position="0 0 1"></a-text>
+        <a-text value="Hello World" id="debug-text" position="0 0 1"></a-text>
         
         <a-entity oculus-touch-controls="hand: left" steer></a-entity>
         <a-entity oculus-touch-controls="hand: right" level></a-entity>
