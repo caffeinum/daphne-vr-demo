@@ -83,26 +83,10 @@
       });
       
       AFRAME.registerComponent('level', {
-        init: function () {
+        tick: function () {
           var el = this.el;
-          el.addEventListener('', function (evt) {
-            target_acceleration.z = 1;
-          });
-          el.addEventListener('xbuttonup', function (evt) {
-            target_acceleration.z = 0;
-          });
-          el.addEventListener('ybuttondown', function (evt) {
-            target_acceleration.z = 1;
-          });
-          el.addEventListener('ybuttonup', function (evt) {
-            target_acceleration.z = 0;
-          });
-          el.addEventListener('triggerdown', function (evt) {
-            target_acceleration.z = -1;
-          });
-          el.addEventListener('triggerup', function (evt) {
-            target_acceleration.z = 0;
-          });
+          
+          
         }
       });
     </script>
