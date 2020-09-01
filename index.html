@@ -26,17 +26,27 @@
       });
       
       AFRAME.registerComponent("sync-acceleration", {
+        init: function () {
+          
+          window.reset_scene = () => {
+            window.speed = new THREE.Vector3();
+            window.acceleration = new THREE.Vector3();
+            window.target_acceleration = new THREE.Vector3();
+            window.alpha = 0;
+            window.zero_alpha = 0;
+            window.is_level_on = false;
+          
+            this.el.object3D.position.set(0, 0, 0);
+
+          };
+          
+          reset_scene();
+          
+        },
         tick: (function() {
           let coeff = 1 / 90; // second per tick
           let damp = 0.2;
           let temp = new THREE.Vector3();
-          
-          window.speed = new THREE.Vector3();
-          window.acceleration = new THREE.Vector3();
-          window.target_acceleration = new THREE.Vector3();
-          window.alpha = 0;
-          window.zero_alpha = 0;
-          window.is_level_on = false;
 
           return function() {
             // who syncronizes with who?
@@ -55,7 +65,10 @@
             
             // alpha => acceleration
             
-            acceleration.z = ( /* arcsin */ alpha ) * 9.8;
+            
+            // LET'S TEST WITH MINUS? IT SHOULD BE OTHER WAY REALLY
+            
+            acceleration.z = - ( /* arcsin */ alpha ) * 9.8;
             
             temp.copy(acceleration).multiplyScalar(coeff);
             
@@ -78,12 +91,12 @@
           // el.addEventListener('xbuttonup', function (evt) {
           //   target_acceleration.z = 0;
           // });
-          // el.addEventListener('ybuttondown', function (evt) {
-          //   target_acceleration.z = 1;
-          // });
-          // el.addEventListener('ybuttonup', function (evt) {
-          //   target_acceleration.z = 0;
-          // });
+          el.addEventListener('ybuttondown', function (evt) {
+
+          });
+          el.addEventListener('ybuttonup', function (evt) {
+            window.reset_scene();
+          });
           // el.addEventListener('triggerdown', function (evt) {
           //   target_acceleration.z = -1;
           // });
@@ -104,7 +117,7 @@
       AFRAME.registerComponent('level', {
         tick: function () {
           if (window.is_level_on) {
-            window.alpha = window.zero_alpha - this.el.object3D.rotation.x;
+            window.alpha = (window.zero_alpha - this.el.object3D.rotation.x);
 
             console.log('alpha', alpha);
           } else {
@@ -119,7 +132,7 @@
           this.el.setAttribute('value', `
             alpha:\t\t\t\t${window.alpha}
             zero_alpha:\t\t${window.zero_alpha}
-            rotation:\t\t\t${window.speed.toArray()}
+            speed:\t\t\t\t${window.speed.toArray()}
             acceleration:\t${window.acceleration.toArray()}
           `)
         }
