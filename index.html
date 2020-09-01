@@ -35,6 +35,8 @@
           window.acceleration = new THREE.Vector3();
           window.target_acceleration = new THREE.Vector3();
           window.alpha = 0;
+          window.zero_alpha = 0;
+          window.is_level_on = false;
 
           return function() {
             // who syncronizes with who?
@@ -70,32 +72,44 @@
       AFRAME.registerComponent('steer', {
         init: function () {
           var el = this.el;
-          el.addEventListener('xbuttondown', function (evt) {
-            target_acceleration.z = 1;
-          });
-          el.addEventListener('xbuttonup', function (evt) {
-            target_acceleration.z = 0;
-          });
-          el.addEventListener('ybuttondown', function (evt) {
-            target_acceleration.z = 1;
-          });
-          el.addEventListener('ybuttonup', function (evt) {
-            target_acceleration.z = 0;
-          });
+          // el.addEventListener('xbuttondown', function (evt) {
+          //   target_acceleration.z = 1;
+          // });
+          // el.addEventListener('xbuttonup', function (evt) {
+          //   target_acceleration.z = 0;
+          // });
+          // el.addEventListener('ybuttondown', function (evt) {
+          //   target_acceleration.z = 1;
+          // });
+          // el.addEventListener('ybuttonup', function (evt) {
+          //   target_acceleration.z = 0;
+          // });
+          // el.addEventListener('triggerdown', function (evt) {
+          //   target_acceleration.z = -1;
+          // });
+          // el.addEventListener('triggerup', function (evt) {
+          //   target_acceleration.z = 0;
+          // });
+          
           el.addEventListener('triggerdown', function (evt) {
-            target_acceleration.z = -1;
+            window.is_level_on = true;
           });
           el.addEventListener('triggerup', function (evt) {
-            target_acceleration.z = 0;
+            window.is_level_on = false;
           });
+          
         }
       });
       
       AFRAME.registerComponent('level', {
         tick: function () {
-          window.alpha = this.el.object3D.rotation.z / 180 * Math.PI;
-          
-          console.log('alpha', alpha);
+          if (window.is_level_on) {
+            window.alpha = this.el.object3D.rotation.x - window.zero_alpha;
+
+            console.log('alpha', alpha);
+          } else {
+            window.zero_alpha = this.el.object3D.rotation.x;
+          }
         }
       });
       
@@ -103,8 +117,9 @@
         tick: function () {
           this.el.setAttribute('value', `
             alpha:\t\t\t\t${window.alpha}
-            rotation:\t\t\t\t${window.speed.toArray()}
-            acceleration:\t\t\t\t${window.acceleration.toArray()}
+            zero_alpha:\t\t${window.zero_alpha}
+            rotation:\t\t\t${window.speed.toArray()}
+            acceleration:\t${window.acceleration.toArray()}
           `)
         }
       });
