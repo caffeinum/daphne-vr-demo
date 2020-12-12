@@ -82,50 +82,6 @@
         })()
       });
       
-      AFRAME.registerComponent('steer', {
-        init: function () {
-          var el = this.el;
-          // el.addEventListener('xbuttondown', function (evt) {
-          //   target_acceleration.z = 1;
-          // });
-          // el.addEventListener('xbuttonup', function (evt) {
-          //   target_acceleration.z = 0;
-          // });
-          el.addEventListener('ybuttondown', function (evt) {
-
-          });
-          el.addEventListener('ybuttonup', function (evt) {
-            window.reset_scene();
-          });
-          // el.addEventListener('triggerdown', function (evt) {
-          //   target_acceleration.z = -1;
-          // });
-          // el.addEventListener('triggerup', function (evt) {
-          //   target_acceleration.z = 0;
-          // });
-          
-          el.addEventListener('triggerdown', function (evt) {
-            window.is_level_on = true;
-          });
-          el.addEventListener('triggerup', function (evt) {
-            window.is_level_on = false;
-          });
-          
-        }
-      });
-      
-      AFRAME.registerComponent('level', {
-        tick: function () {
-          if (window.is_level_on) {
-            window.alpha = (window.zero_alpha - this.el.object3D.rotation.x);
-
-            console.log('alpha', alpha);
-          } else {
-            window.zero_alpha = this.el.object3D.rotation.x;
-            window.alpha = 0;
-          }
-        }
-      });
       
       AFRAME.registerComponent('debug-text', {
         tick: function () {
@@ -160,7 +116,7 @@
         />
         <img
           id="sky"
-          src="https://img.gs/bbdkhfbzkk/2048x2048,stretch/http://i.imgur.com/WqlqEkq.jpg"
+          src="https://cdn.glitch.com/03242f16-d041-41e4-a30f-c084435bc64e%2Fstars_texture2942.jpg?v=1607731920565"
           crossorigin="anonymous"
         />
         <a-asset-item
@@ -211,11 +167,15 @@
           material="shader: flat; color: white; transparent: true; opacity: 0.4"
         ></a-entity>
       </a-entity>
+      
+      <!-- Grid -->
       <a-entity
         geometry="primitive: plane; width: 10000; height: 10000;"
         rotation="-90 0 0"
         material="src: #grid; repeat: 10000 10000; transparent: true;metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"
       ></a-entity>
+      
+      
 
       <a-entity
         light="color: #ccccff; intensity: 1; type: ambient;"
@@ -238,16 +198,12 @@
         
 <!--         <a-sphere position="0 1 -1"></a-sphere> -->
         
-        <a-entity oculus-touch-controls="hand: left" steer></a-entity>
-        <a-entity oculus-touch-controls="hand: right" level></a-entity>
+        <a-entity oculus-touch-controls="hand: left"></a-entity>
+        <a-entity oculus-touch-controls="hand: right"></a-entity>
         
         <a-entity id="camera" camera look-controls wasd-controls></a-entity>
       </a-entity>
       
-      
-<!--       <a-entity hand-controls="left" steer></a-entity>
-      <a-entity hand-controls="right" level></a-entity> -->
-
     </a-scene>
   </body>
 </html>
