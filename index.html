@@ -1,27 +1,28 @@
-<!-- By Ada Rose Edwards @lady_ada_king. -->
+<!-- Aleksey Bykhun -->
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Vaporwave - A-Frame</title>
+    <title>Follow Head Demo - A-Frame</title>
     <meta
       name="description"
-      content="Vaporwave aesthetic text By Ada Rose Edwards (@lady_ada_king)."
+      content="Vaporwave aesthetic Asteroid Demo."
     />
-    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-text-geometry-component@0.5.1/dist/aframe-text-geometry-component.min.js"></script>
     <script src="https://unpkg.com/aframe-extras@3.3.0/dist/aframe-extras.min.js"></script>
-    <!--     <script src="model-viewer.js"></script> -->
 
     <script>
       AFRAME.registerComponent("follow-head", {
         tick: (function() {
           // let coeff = 1 / 90; // second per tick
           // let speed = new THREE.Vector3();
-
+          // window.followHeadObject = this.el.object3D;
+          
           return function() {
             // speed.z += 0.01 * coeff; // (m/s2) / (sec/tick) = m/s per tick
 
             console.log('this.el.object3D.position', this.el.object3D.position);
+            
           };
         })()
       });
@@ -64,53 +65,16 @@
           src="https://cdn.glitch.com/03242f16-d041-41e4-a30f-c084435bc64e%2Fstars_texture2942.jpg?v=1607731920565"
           crossorigin="anonymous"
         />
-        <a-asset-item
-          id="dawningFont"
-          src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2FdawningOfANewDayRegular.typeface.json?1490305922844"
-        ></a-asset-item>
-        <a-asset-item
-          id="exoFont"
-          src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2Fexo2Black.typeface.json?1490305922150"
-        ></a-asset-item>
-        <a-asset-item
-          id="exoItalicFont"
-          src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2Fexo2BlackItalic.typeface.json?1490305922725"
-        ></a-asset-item>
-
+        
         <a-asset-item
           id="asteroid"
           src="https://cdn.glitch.com/03242f16-d041-41e4-a30f-c084435bc64e%2Fasteroid.gltf?v=1607734890848"
+          crossorigin="anonymous"
         ></a-asset-item>
       </a-assets>
-<!-- 
-      <a-entity position="-3 1 -6" rotation="5 0 0">
-        <a-entity
-          rotation="0 0 5"
-          position="0 2 0.2"
-          text-geometry="value: Virtual Reality; font: #dawningFont; bevelEnabled: true; bevelSize: 0.05; bevelThickness: 0.05; curveSegments: 12; size: 1; height: 0;"
-          material="color:lavenderblush; metalness:1; roughness: 0; sphericalEnvMap: #pink;"
-        ></a-entity>
-        <a-entity
-          position="-0.5 0.5 -0.5"
-          scale="0.6 1.2 1"
-          text-geometry="value: VAPORWAVE; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1.5; height: 0.5;"
-          material="color:pink; metalness:0.9; roughness: 0.05; sphericalEnvMap: #chrome;"
-        ></a-entity>
-
-        <a-entity
-          position="1 0 0.3"
-          text-geometry="value: Aesthetic; font: #exoItalicFont; style: italic; size: 0.8; weight: bold; height: 0;"
-          material="shader: flat; color: white"
-        ></a-entity>
-        <a-entity
-          position="1 0 0.3"
-          text-geometry="value: Aesthetic; font: #exoItalicFont; style: italic; size: 0.8; weight: bold; height: 0; bevelEnabled: true; bevelSize: 0.04; bevelThickness: 0.04; curveSegments: 1"
-          material="shader: flat; color: white; transparent: true; opacity: 0.4"
-        ></a-entity>
-      </a-entity> -->
 
       <a-entity
-        position="0 -10 0"
+        position="0 -5 0"
         gltf-model="https://cdn.glitch.com/03242f16-d041-41e4-a30f-c084435bc64e%2Fasteroid.gltf?v=1607734890848"
         follow-head
       ></a-entity>
