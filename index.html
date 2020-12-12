@@ -10,92 +10,35 @@
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-text-geometry-component@0.5.1/dist/aframe-text-geometry-component.min.js"></script>
     <script src="https://unpkg.com/aframe-extras@3.3.0/dist/aframe-extras.min.js"></script>
-    <script src="model-viewer.js"></script>
-    
+    <!--     <script src="model-viewer.js"></script> -->
+
     <script>
-
-      AFRAME.registerComponent("float-forward", {
+      AFRAME.registerComponent("follow-head", {
         tick: (function() {
-          let coeff = 1 / 90; // second per tick
-          let speed = new THREE.Vector3();
-          
-          return function() {
-            speed.z += 0.01 * coeff; // (m/s2) / (sec/tick) = m/s per tick
-
-            this.el.object3D.position.add(speed);
-          };
-        })()
-      });
-      
-      AFRAME.registerComponent("sync-acceleration", {
-        init: function () {
-          
-          window.reset_scene = () => {
-            window.speed = new THREE.Vector3();
-            window.acceleration = new THREE.Vector3();
-            window.target_acceleration = new THREE.Vector3();
-            window.alpha = 0;
-            window.zero_alpha = 0;
-            window.is_level_on = false;
-          
-            this.el.object3D.position.set(0, 1.6, 0);
-
-          };
-          
-          reset_scene();
-          
-        },
-        tick: (function() {
-          let coeff = 1 / 90; // second per tick
-          let damp = 0.2;
-          let temp = new THREE.Vector3();
+          // let coeff = 1 / 90; // second per tick
+          // let speed = new THREE.Vector3();
 
           return function() {
-            // who syncronizes with who?
-            
-            // acceleration => alpha
-            
-            /*
-            temp.copy(target_acceleration).sub(acceleration).multiplyScalar(damp);
-            
-            // acceleration += 0.2 * (target_acceleration - acceleration)
-            acceleration.add(temp);
-            
-            alpha = acceleration.z / 9.8;
-            
-            */
-            
-            // alpha => acceleration
-            
-            
-            // LET'S TEST WITH MINUS? IT SHOULD BE OTHER WAY REALLY
-            
-            acceleration.z = ( /* arcsin */ alpha ) * 9.8;
-            
-            temp.copy(acceleration).multiplyScalar(coeff);
-            
-            // += acc * coeff
-            window.speed.add(temp);
+            // speed.z += 0.01 * coeff; // (m/s2) / (sec/tick) = m/s per tick
 
-            this.el.object3D.position.add(window.speed);
-            this.el.object3D.rotation.set(alpha, 0, 0);
-            
+            console.log('this.el.object3D.position', this.el.object3D.position);
           };
-        })()
+        })()l
       });
-      
-      
-      AFRAME.registerComponent('debug-text', {
-        tick: function () {
-          this.el.setAttribute('value', `
-            alpha:\t\t\t\t${window.alpha}
-            zero_alpha:\t\t${window.zero_alpha}
-            speed:\t\t\t\t${window.speed.toArray()}
-            acceleration:\t${window.acceleration.toArray()}
-          `)
-        }
-      });
-      
+
+      // AFRAME.registerComponent("debug-text", {
+      //   tick: function() {
+      //     this.el.setAttribute(
+      //       "value",
+      //       `
+      //       alpha:\t\t\t\t${window.alpha}
+      //       zero_alpha:\t\t${window.zero_alpha}
+      //       speed:\t\t\t\t${window.speed.toArray()}
+      //       acceleration:\t${window.acceleration.toArray()}
+      //     `
+      //     );
+      //   }
+      // });
     </script>
   </head>
   <body>
@@ -133,13 +76,13 @@
           id="exoItalicFont"
           src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2Fexo2BlackItalic.typeface.json?1490305922725"
         ></a-asset-item>
-        
+
         <a-asset-item
           id="asteroid"
-          src="https://cdn.glitch.com/03242f16-d041-41e4-a30f-c084435bc64e%2FAsteroid_Ceres.usdz?v=1607733807905"
+          src="https://cdn.glitch.com/03242f16-d041-41e4-a30f-c084435bc64e%2Fasteroid.gltf?v=1607734890848"
         ></a-asset-item>
       </a-assets>
-
+<!-- 
       <a-entity position="-3 1 -6" rotation="5 0 0">
         <a-entity
           rotation="0 0 5"
@@ -164,11 +107,14 @@
           text-geometry="value: Aesthetic; font: #exoItalicFont; style: italic; size: 0.8; weight: bold; height: 0; bevelEnabled: true; bevelSize: 0.04; bevelThickness: 0.04; curveSegments: 1"
           material="shader: flat; color: white; transparent: true; opacity: 0.4"
         ></a-entity>
-      </a-entity>
-      
+      </a-entity> -->
+
       <a-entity
-                
-      
+        position="0 -10 0"
+        gltf-model="https://cdn.glitch.com/03242f16-d041-41e4-a30f-c084435bc64e%2Fasteroid.gltf?v=1607734890848"
+        follow-head
+      ></a-entity>
+
       <!-- Grid -->
       <a-entity
         geometry="primitive: plane; width: 10000; height: 10000;"
@@ -192,25 +138,23 @@
       <a-entity light="color: white; type: ambient;"></a-entity>
 
       <!--        rotation="0 -90 0" -->
-      <a-sky
-       src="#sky"
-             
-      ></a-sky>
-      
-      <a-entity
-        
+      <a-sky src="#sky"></a-sky>
 
       <a-entity id="rig" position="0 1.6 0" sync-acceleration>
-        <a-text value="Hello World" id="debug-text" position="0 0 -1" debug-text></a-text>
-        
-<!--         <a-sphere position="0 1 -1"></a-sphere> -->
-        
+        <a-text
+          value="Hello World"
+          id="debug-text"
+          position="0 0 -1"
+          debug-text
+        ></a-text>
+
+        <!--         <a-sphere position="0 1 -1"></a-sphere> -->
+
         <a-entity oculus-touch-controls="hand: left"></a-entity>
         <a-entity oculus-touch-controls="hand: right"></a-entity>
-        
+
         <a-entity id="camera" camera look-controls wasd-controls></a-entity>
       </a-entity>
-      
     </a-scene>
   </body>
 </html>
