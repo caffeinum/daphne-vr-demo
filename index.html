@@ -5,54 +5,25 @@
     <title>Follow Head Demo - A-Frame</title>
     <meta name="description" content="Vaporwave aesthetic Asteroid Demo." />
     <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-text-geometry-component@0.5.1/dist/aframe-text-geometry-component.min.js"></script>
-    <script src="https://unpkg.com/aframe-extras@3.3.0/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
 
-    <script>
-      AFRAME.registerComponent("follow-head", {
-        tick: (function() {
-          // let coeff = 1 / 90; // second per tick
-          // let speed = new THREE.Vector3();
-          // window.followHeadObject = this.el.object3D;
-
-          return function() {
-            // speed.z += 0.01 * coeff; // (m/s2) / (sec/tick) = m/s per tick
-            // console.log('this.el.object3D.position', this.el.object3D.position);
-          };
-        })()
-      });
-
-      // AFRAME.registerComponent("debug-text", {
-      //   tick: function() {
-      //     this.el.setAttribute(
-      //       "value",
-      //       `
-      //       alpha:\t\t\t\t${window.alpha}
-      //       zero_alpha:\t\t${window.zero_alpha}
-      //       speed:\t\t\t\t${window.speed.toArray()}
-      //       acceleration:\t${window.acceleration.toArray()}
-      //     `
-      //     );
-      //   }
-      // });
-    </script>
   </head>
   <body>
     <a-scene stats>
       <a-assets timeout="10000">
-        <img
+<!--         <img
           id="pink"
           src="https://img.gs/bbdkhfbzkk/stretch/http://i.imgur.com/1hyyIUi.jpg"
           crossorigin="anonymous"
-        />
+        /> -->
+<!--         <img
+          src="https://img.gs/bbdkhfbzkk/2048x1024,stretch/http://i.imgur.com/WMNH2OF.jpg"
+          id="chrome"
+          crossorigin="anonymous"
+        /> -->
         <img
           src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png"
           id="grid"
-          crossorigin="anonymous"
-        />
-        <img
-          src="https://img.gs/bbdkhfbzkk/2048x1024,stretch/http://i.imgur.com/WMNH2OF.jpg"
-          id="chrome"
           crossorigin="anonymous"
         />
         <img
