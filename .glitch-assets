@@ -13,3 +13,6 @@
 {"uuid":"adSBq97hhhpFNUnc","deleted":true}
 {"uuid":"adSBq97hhhpFNUnb","deleted":true}
 {"name":"asteroid.bin","date":"2020-12-12T01:06:30.777Z","url":"https://cdn.glitch.com/03242f16-d041-41e4-a30f-c084435bc64e%2Fasteroid.bin","type":"application/macbinary","size":7656192,"thumbnail":"https://cdn.glitch.com/03242f16-d041-41e4-a30f-c084435bc64e%2Fthumbnails%2Fasteroid.bin","thumbnailWidth":210,"thumbnailHeight":210,"uuid":"zksXQkaSdRx2I8Ry"}
+{"name":"asteroid.png","date":"2020-12-12T01:07:00.103Z","url":"https://cdn.glitch.com/03242f16-d041-41e4-a30f-c084435bc64e%2Fasteroid.png","type":"image/png","size":22165000,"imageWidth":8192,"imageHeight":4096,"thumbnail":"https://cdn.glitch.com/03242f16-d041-41e4-a30f-c084435bc64e%2Fthumbnails%2Fasteroid.png","thumbnailWidth":330,"thumbnailHeight":165,"uuid":"up8QXbjcQYXVMWSI"}
+{"uuid":"aOqqVFdKZMlB9Dhq","deleted":true}
+{"name":"asteroid.gltf","date":"2020-12-12T01:07:30.897Z","url":"https://cdn.glitch.com/03242f16-d041-41e4-a30f-c084435bc64e%2Fasteroid.gltf","type":"","size":6627,"thumbnail":"https://cdn.glitch.com/03242f16-d041-41e4-a30f-c084435bc64e%2Fthumbnails%2Fasteroid.gltf","thumbnailWidth":210,"thumbnailHeight":210,"uuid":"IGjau5MCYU7aX6LN"}
