@@ -108,13 +108,44 @@
 
       </a-assets>
 
-      <a-sphere
-        material="src: #asteroid_texture; metalness: 0.2; roughness: 0.4; sphericalEnvMap: #asteroid_texture;"
-        position="0 -1 0"
-        radius="1"
-        follow-head
-        earth
-      ></a-sphere>
+      <a-entity
+        id="world"
+        follow-head-rotation
+      >
+        <a-sphere
+          material="src: #asteroid_texture; metalness: 0.2; roughness: 0.4; sphericalEnvMap: #asteroid_texture;"
+          position="0 -1 0"
+          radius="1"
+          follow-head
+          earth
+        ></a-sphere>
+
+        <a-sphere
+          material="src: #asteroid_texture; metalness: 0.2; roughness: 0.4; sphericalEnvMap: #asteroid_texture;"
+          position="1 5 2"
+          radius="3"
+        ></a-sphere>
+
+        <!-- Lights -->
+        <a-entity
+          light="color: #ccccff; intensity: 1; type: ambient;"
+          visible=""
+        ></a-entity>
+        <a-entity
+          light="color: #ffaaff; intensity: 1.5"
+          position="5 5 5"
+        ></a-entity>
+        <a-entity
+          light="color: white; intensity: 0.5"
+          position="-5 5 15"
+        ></a-entity>
+
+        <a-entity light="color: white; type: ambient;"></a-entity>
+
+        <a-sky
+          src="#sky"
+        ></a-sky>
+      </a-entity>
 
       <!-- Grid -->
       <a-entity
@@ -124,32 +155,20 @@
         material="src: #grid; repeat: 10000 10000; transparent: true;metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"
       ></a-entity>
 
-      <!-- Lights -->
       <a-entity
-        light="color: #ccccff; intensity: 1; type: ambient;"
-        visible=""
-      ></a-entity>
-      <a-entity
-        light="color: #ffaaff; intensity: 1.5"
-        position="5 5 5"
-      ></a-entity>
-      <a-entity
-        light="color: white; intensity: 0.5"
-        position="-5 5 15"
-      ></a-entity>
-
-      <a-entity light="color: white; type: ambient;"></a-entity>
-
-      <a-sky
-        src="#sky"
-        follow-head-rotation
-      ></a-sky>
-
-      <a-entity id="rig" position="0 0 0">
+        id="rig"
+        position="0 1.6 0"
+      >
         <a-entity oculus-touch-controls="hand: left"></a-entity>
         <a-entity oculus-touch-controls="hand: right"></a-entity>
 
-        <a-entity id="camera" camera look-controls wasd-controls head></a-entity>
+        <a-entity
+          id="camera"
+          camera
+          look-controls
+          wasd-controls
+          head
+        ></a-entity>
       </a-entity>
     </a-scene>
   </body>
