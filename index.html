@@ -9,12 +9,28 @@
     <!-- <script src="https://unpkg.com/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script> -->
     <script type="text/javascript">
 
+    const EARTH_RADIUS = 4;
+    const IS_SHOW_GRID = true;
+
+    AFRAME.registerComponent('earth', {
+      init: function () {
+        window.earth = this.el;
+        this.el.object3D.position.y = -EARTH_RADIUS;
+        this.el.setAttribute('radius', EARTH_RADIUS);
+      }
+    });
+
+    AFRAME.registerComponent('grid', {
+      init: function () {
+        if (!IS_SHOW_GRID)
+          this.el.remove();
+      }
+    });
+
     AFRAME.registerComponent('head', {
       init: function () {
-
         window.head = this.el;
-
-      },
+      }
     });
 
     AFRAME.registerComponent('follow-head', {
@@ -24,8 +40,8 @@
         this.el.object3D.position.x = position.x;
         this.el.object3D.position.z = position.z;
 
-        this.el.object3D.rotation.x = -position.z;
-        this.el.object3D.rotation.z = -position.x;
+        this.el.object3D.rotation.x = -position.z / EARTH_RADIUS;
+        this.el.object3D.rotation.z = position.x / EARTH_RADIUS;
       }
     });
     </script>
@@ -68,33 +84,19 @@
           crossorigin="anonymous"
         ></a-asset-item>
 
-
       </a-assets>
-
-      <!-- scale="100" -->
-      <!-- <a-gltf-model
-        position="0 -2 0"
-        src="#asteroid"
-        color="#4CC3D9"
-      >
-      </a-gltf-model>
-       -->
-       <!-- position="0 -2 0" -->
-
-      <!-- <a-gltf-model
-        src="#mega"
-      >
-      </a-gltf-model> -->
 
       <a-sphere
         material="src: #asteroid_texture; metalness: 0.6; roughness: 0.4; sphericalEnvMap: #asteroid_texture;"
-        position="0 -4 0"
-        radius="4"
+        position="0 -1 0"
+        radius="1"
         follow-head
+        earth
       ></a-sphere>
 
       <!-- Grid -->
       <a-entity
+        grid
         geometry="primitive: plane; width: 10000; height: 10000;"
         rotation="-90 0 0"
         material="src: #grid; repeat: 10000 10000; transparent: true;metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"
