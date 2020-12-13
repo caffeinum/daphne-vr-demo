@@ -118,12 +118,12 @@
         world
       >
         <a-sphere
-          material="src: #asteroid_texture; metalness: 0.2; roughness: 0.4; sphericalEnvMap: #asteroid_texture;"
+          material="src: #asteroid_texture; metalness: 0.2; roughness: 0.4; sphericalEnvMap: #sky;"
           earth
         ></a-sphere>
 
         <a-sphere
-          material="src: #asteroid_texture; metalness: 0.2; roughness: 0.4; sphericalEnvMap: #asteroid_texture;"
+          material="src: #asteroid_texture; metalness: 0.8; roughness: 0.8; sphericalEnvMap: #sky;"
           position="1 10 -5"
           radius="3"
         ></a-sphere>
@@ -154,7 +154,7 @@
         grid
         geometry="primitive: plane; width: 10000; height: 10000;"
         rotation="-90 0 0"
-        material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"
+        material="src: #grid; repeat: 10000 10000; transparent: true; metalness: 0.8; roughness: 0.4; sphericalEnvMap: #sky;"
       ></a-entity>
 
       <a-entity id="rig">
