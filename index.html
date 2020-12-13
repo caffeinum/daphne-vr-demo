@@ -10,20 +10,28 @@
     <script type="text/javascript">
 
     const EARTH_RADIUS = 2;
+
     const IS_SHOW_GRID = false;
+
+    AFRAME.registerComponent('world', {
+      init: function () {
+        window.world = this.el;
+        this.el.object3D.position.y = -EARTH_RADIUS;
+      }
+    });
 
     AFRAME.registerComponent('earth', {
       init: function () {
         window.earth = this.el;
-        this.el.object3D.position.y = -EARTH_RADIUS;
         this.el.setAttribute('radius', EARTH_RADIUS);
       }
     });
 
     AFRAME.registerComponent('grid', {
       init: function () {
-        if (!IS_SHOW_GRID)
+        if (!IS_SHOW_GRID) {
           this.el.remove();
+        }
       }
     });
 
@@ -41,6 +49,7 @@
 
       return rotation;
     }
+
     AFRAME.registerComponent('follow-head', {
       tick: function () {
         const { position } = window.head.object3D;
@@ -48,10 +57,10 @@
         this.el.object3D.position.x = position.x;
         this.el.object3D.position.z = position.z;
 
-        const rotation = calculateRotation(position);
-
-        this.el.object3D.rotation.x = rotation.x;
-        this.el.object3D.rotation.z = rotation.z;
+        // const rotation = calculateRotation(position);
+        //
+        // this.el.object3D.rotation.x = rotation.x;
+        // this.el.object3D.rotation.z = rotation.z;
       }
     });
 
@@ -107,48 +116,66 @@
 
       </a-assets>
 
-      <a-sphere
-        material="src: #asteroid_texture; metalness: 0.2; roughness: 0.4; sphericalEnvMap: #asteroid_texture;"
-        position="0 -1 0"
-        radius="1"
+      <a-entity
+        id="world"
         follow-head
-        earth
-      ></a-sphere>
+        follow-head-rotation
+        world
+      >
+        <a-sphere
+          material="src: #asteroid_texture; metalness: 0.2; roughness: 0.4; sphericalEnvMap: #asteroid_texture;"
+          earth
+        ></a-sphere>
+
+        <a-sphere
+          material="src: #asteroid_texture; metalness: 0.2; roughness: 0.4; sphericalEnvMap: #asteroid_texture;"
+          position="1 5 2"
+          radius="3"
+        ></a-sphere>
+
+        <!-- Lights -->
+        <a-entity
+          light="color: #ccccff; intensity: 1; type: ambient;"
+          visible=""
+        ></a-entity>
+        <a-entity
+          light="color: #ffaaff; intensity: 1.5"
+          position="5 5 5"
+        ></a-entity>
+        <a-entity
+          light="color: white; intensity: 0.5"
+          position="-5 5 15"
+        ></a-entity>
+
+        <a-entity light="color: white; type: ambient;"></a-entity>
+
+        <a-sky
+          src="#sky"
+        ></a-sky>
+      </a-entity>
 
       <!-- Grid -->
       <a-entity
         grid
         geometry="primitive: plane; width: 10000; height: 10000;"
         rotation="-90 0 0"
-        material="src: #grid; repeat: 10000 10000; transparent: true;metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"
+        material="src: #grid; repeat: 10000 10000; transparent: true; metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"
       ></a-entity>
 
-      <!-- Lights -->
       <a-entity
-        light="color: #ccccff; intensity: 1; type: ambient;"
-        visible=""
-      ></a-entity>
-      <a-entity
-        light="color: #ffaaff; intensity: 1.5"
-        position="5 5 5"
-      ></a-entity>
-      <a-entity
-        light="color: white; intensity: 0.5"
-        position="-5 5 15"
-      ></a-entity>
-
-      <a-entity light="color: white; type: ambient;"></a-entity>
-
-      <a-sky
-        src="#sky"
-        follow-head-rotation
-      ></a-sky>
-
-      <a-entity id="rig" position="0 1.6 0">
+        id="rig"
+        position="0 1.6 0"
+      >
         <a-entity oculus-touch-controls="hand: left"></a-entity>
         <a-entity oculus-touch-controls="hand: right"></a-entity>
 
-        <a-entity id="camera" camera look-controls wasd-controls head></a-entity>
+        <a-entity
+          id="camera"
+          camera
+          look-controls
+          wasd-controls
+          head
+        ></a-entity>
       </a-entity>
     </a-scene>
   </body>
