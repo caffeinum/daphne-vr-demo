@@ -104,6 +104,12 @@
         ></a-asset-item>
 
         <a-asset-item
+          id="coffeeshop"
+          src="assets/coffee_shop/scene.gltf"
+          crossorigin="anonymous"
+        ></a-asset-item>
+
+        <a-asset-item
           id="asteroid2"
           src="assets/Bennu_1_1.gltf"
           crossorigin="anonymous"
@@ -121,6 +127,18 @@
           material="src: #asteroid_texture; metalness: 0.2; roughness: 0.4; sphericalEnvMap: #sky;"
           earth
         ></a-sphere>
+
+        <a-entity
+          id="coffeeshop"
+          position="0 -2 2"
+          rotation="-90 0 0"
+        >
+          <a-gltf-model
+            src="#coffeeshop"
+            position="-0.7 3 3"
+            scale="0.02 0.02 0.02"
+          />
+        </a-entity>
 
         <a-sphere
           material="src: #asteroid_texture; metalness: 0.8; roughness: 0.8; sphericalEnvMap: #sky;"
