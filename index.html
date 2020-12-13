@@ -44,6 +44,7 @@
     const calculateRotation = (headPosition) => {
       const rotation = {};
 
+      // TODO: correct calculations
       rotation.x = -headPosition.z / EARTH_RADIUS;
       rotation.z =  headPosition.x / EARTH_RADIUS;
 
@@ -105,12 +106,6 @@
         <a-asset-item
           id="asteroid2"
           src="assets/Bennu_1_1.gltf"
-          crossorigin="anonymous"
-        ></a-asset-item>
-
-        <a-asset-item
-          id="mega"
-          src="assets/mega_scene/scene.gltf"
           crossorigin="anonymous"
         ></a-asset-item>
 
