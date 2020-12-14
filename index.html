@@ -41,15 +41,22 @@
       }
     });
 
-    const calculateRotation = (headPosition) => {
-      const rotation = {};
+    const calculateDiffRotation = (() => {
+      const lastHeadPosition = new THREE.Vector3( 0,0,0 );
 
-      // TODO: correct calculations
-      rotation.x = -headPosition.z / EARTH_RADIUS;
-      rotation.z =  headPosition.x / EARTH_RADIUS;
+      return (headPosition) => {
+        // TODO: fix
+        const rotation = new THREE.Vector3(
+          -(headPosition.z - lastHeadPosition.z) / EARTH_RADIUS,
+          0,
+          (headPosition.x - lastHeadPosition.x) / EARTH_RADIUS,
+        );
 
-      return rotation;
-    }
+        lastHeadPosition.copy(headPosition);
+
+        return rotation;
+      }
+    })();
 
     AFRAME.registerComponent('follow-head', {
       tick: function () {
@@ -58,10 +65,6 @@
         this.el.object3D.position.x = position.x;
         this.el.object3D.position.z = position.z;
 
-        // const rotation = calculateRotation(position);
-        //
-        // this.el.object3D.rotation.x = rotation.x;
-        // this.el.object3D.rotation.z = rotation.z;
       }
     });
 
@@ -69,10 +72,12 @@
       tick: function () {
         const { position } = window.head.object3D;
 
-        const rotation = calculateRotation(position);
+        const diffRotation = calculateDiffRotation(position);
 
-        this.el.object3D.rotation.x = rotation.x;
-        this.el.object3D.rotation.z = rotation.z;
+        // console.log('diffRotation', diffRotation)
+
+        this.el.object3D.rotation.x += diffRotation.x;
+        this.el.object3D.rotation.z += diffRotation.z;
       }
     });
     </script>
